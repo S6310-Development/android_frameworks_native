@@ -117,11 +117,6 @@ else
     PLATFORM := $(TARGET_BOARD_PLATFORM)
 endif
     LOCAL_C_INCLUDES += $(call project-path-for,qcom-display)/$(PLATFORM)/libgralloc
-    LOCAL_C_INCLUDES += $(call project-path-for,qcom-display)/$(PLATFORM)/libqdutils
-ifeq ($(TARGET_QCOM_DISPLAY_VARIANT),caf-new)
-    LOCAL_CFLAGS += -DQCOM_B_FAMILY
-endif
-    LOCAL_SHARED_LIBRARIES += libqdutils
     LOCAL_CFLAGS += -DQCOM_BSP
 endif
 
