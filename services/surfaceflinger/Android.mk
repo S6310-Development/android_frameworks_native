@@ -52,10 +52,6 @@ ifeq ($(TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS),true)
     LOCAL_CFLAGS += -DFORCE_HWC_COPY_FOR_VIRTUAL_DISPLAYS
 endif
 
-ifeq ($(BOARD_EGL_NEEDS_FNW),true)
-    LOCAL_CFLAGS += -DEGL_NEEDS_FNW
-endif
-
 ifneq ($(NUM_FRAMEBUFFER_SURFACE_BUFFERS),)
   LOCAL_CFLAGS += -DNUM_FRAMEBUFFER_SURFACE_BUFFERS=$(NUM_FRAMEBUFFER_SURFACE_BUFFERS)
 endif
@@ -88,10 +84,6 @@ else
     LOCAL_CFLAGS += -DPRESENT_TIME_OFFSET_FROM_VSYNC_NS=0
 endif
 
-ifeq ($(BOARD_ADRENO_DECIDE_TEXTURE_TARGET),true)
-    LOCAL_CFLAGS += -DDECIDE_TEXTURE_TARGET
-endif
-
 LOCAL_CFLAGS += -fvisibility=hidden
 
 LOCAL_SHARED_LIBRARIES := \
@@ -121,6 +113,11 @@ else
     PLATFORM := $(TARGET_BOARD_PLATFORM)
 endif
     LOCAL_C_INCLUDES += $(call project-path-for,qcom-display)/$(PLATFORM)/libgralloc
+    LOCAL_C_INCLUDES += $(call project-path-for,qcom-display)/$(PLATFORM)/libqdutils
+ifeq ($(TARGET_QCOM_DISPLAY_VARIANT),caf-new)
+    LOCAL_CFLAGS += -DQCOM_B_FAMILY
+endif
+    LOCAL_SHARED_LIBRARIES += libqdutils
     LOCAL_CFLAGS += -DQCOM_BSP
 endif
 
