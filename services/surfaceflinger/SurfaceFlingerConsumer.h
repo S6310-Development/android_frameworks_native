@@ -19,6 +19,9 @@
 
 #include "DispSync.h"
 #include <gui/GLConsumer.h>
+#ifdef DECIDE_TEXTURE_TARGET
+#include "RenderEngine/Texture.h"
+#endif
 
 namespace android {
 // ----------------------------------------------------------------------------
@@ -53,7 +56,11 @@ public:
     // reject the newly acquired buffer.  Unlike the GLConsumer version,
     // this does not guarantee that the buffer has been bound to the GL
     // texture.
+#ifdef DECIDE_TEXTURE_TARGET
+    status_t updateTexImage(BufferRejecter* rejecter, const DispSync& dispSync, Texture* mTexture = 0);
+#else
     status_t updateTexImage(BufferRejecter* rejecter, const DispSync& dispSync);
+#endif
 
     // See GLConsumer::bindTextureImageLocked().
     status_t bindTextureImage();

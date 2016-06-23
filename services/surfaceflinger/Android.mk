@@ -87,6 +87,10 @@ else
     LOCAL_CFLAGS += -DPRESENT_TIME_OFFSET_FROM_VSYNC_NS=0
 endif
 
+ifeq ($(BOARD_ADRENO_DECIDE_TEXTURE_TARGET),true)
+    LOCAL_CFLAGS += -DDECIDE_TEXTURE_TARGET
+endif
+
 LOCAL_CFLAGS += -fvisibility=hidden -Werror=format
 LOCAL_CFLAGS += -std=c++11
 
@@ -105,8 +109,8 @@ LOCAL_SHARED_LIBRARIES := \
 	libpowermanager
 
 ifeq ($(TARGET_USES_QCOM_BSP), true)
-    LOCAL_C_INCLUDES += $(call project-path-for,qcom-display)/libgralloc
-    LOCAL_C_INCLUDES += $(call project-path-for,qcom-display)/libqdutils
+    LOCAL_C_INCLUDES += $(TOP)/hardware/qcom/display/libgralloc
+    LOCAL_C_INCLUDES += $(TOP)/hardware/qcom/display/libqdutils
     LOCAL_SHARED_LIBRARIES += libqdutils
 endif
 

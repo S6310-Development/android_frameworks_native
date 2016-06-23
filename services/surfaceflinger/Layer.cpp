@@ -1359,8 +1359,13 @@ Region Layer::latchBuffer(bool& recomputeVisibleRegions)
         Reject r(mDrawingState, getCurrentState(), recomputeVisibleRegions,
                 getProducerStickyTransform() != 0);
 
-        status_t updateResult = mSurfaceFlingerConsumer->updateTexImage(&r,
-                mFlinger->mPrimaryDispSync);
+#ifdef DECIDE_TEXTURE_TARGET
+         status_t updateResult = mSurfaceFlingerConsumer->updateTexImage(&r,
+                 mFlinger->mPrimaryDispSync, &mTexture);
+#else
+         status_t updateResult = mSurfaceFlingerConsumer->updateTexImage(&r,
+                 mFlinger->mPrimaryDispSync);
+#endif
         if (updateResult == BufferQueue::PRESENT_LATER) {
             // Producer doesn't want buffer to be displayed yet.  Signal a
             // layer update so we check again at the next opportunity.
